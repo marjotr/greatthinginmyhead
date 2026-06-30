@@ -1,6 +1,17 @@
 from google import genai
 
-client = genai.Client(api_key="AQ.Ab8RN6IjFWWJJKg9nsuMjNfa4-fEcTKqdJLPosu4eSvPvSzPRA")
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# O .get() evita que o Python trave se não achar a chave, retornando None
+api_key = os.getenv("GOOGLE_API_KEY")
+
+if not api_key:
+    raise ValueError("Erro: A chave GOOGLE_API_KEY não foi encontrada! Verifique o arquivo .env.")
+
+client = genai.Client(api_key=api_key)
 
 # LÓGICA DE LEITURA DE DADOS: O Python abre e lê o arquivo local
 with open("dados_rio.txt", "r", encoding="utf-8") as arquivo:
